@@ -13,14 +13,13 @@ include_directories(
 	external/assimp-3.0.1270/include/
 	external/bullet-2.81-rev2613/src/
 	.
+    include/
 )
-
 
 set(ALL_LIBS
 	${OPENGL_LIBRARY}
 	glfw
 	GLEW_1130)
-
 
 add_executable(thinGLViewerSample 
 	src/thinGLViewerSample.cpp src/shader.cpp
