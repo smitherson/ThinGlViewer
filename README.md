@@ -1,5 +1,5 @@
 # ThinGlViewer
-Veeeery simple opengl viewer for scientific debugging and visualizing. Simpler than libqglciewer. 
+Veeeery simple opengl viewer for scientific debugging and visualizing. Simpler than libqglviewer. 
 
 Based on https://github.com/opengl-tutorials/ogl
 
