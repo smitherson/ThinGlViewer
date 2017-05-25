@@ -6,7 +6,6 @@
 
 // Include GLFW
 #include <glfw3.h>
-GLFWwindow* window;
 
 // Include GLM
 #include <glm/glm.hpp>
@@ -14,11 +13,8 @@ GLFWwindow* window;
 
 class ThinGlViewer {
     public:
-
-
-
-    private:
+        void render();
         GLFWwindow* window;
         void initWindow(const char* windowName, const int width, const int height);
-}
+};
 

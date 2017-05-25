@@ -4,6 +4,8 @@ project (Tutorials)
 
 find_package(OpenGL REQUIRED)
 
+set(CMAKE_CXX_FLAGS " -g ${CMAKE_CXX_FLAGS}" )
+
 add_subdirectory (external)
 include_directories(
 	external/AntTweakBar-1.16/include/
@@ -13,7 +15,7 @@ include_directories(
 	external/assimp-3.0.1270/include/
 	external/bullet-2.81-rev2613/src/
 	.
-    include/
+  ./include/
 )
 
 set(ALL_LIBS
@@ -22,7 +24,7 @@ set(ALL_LIBS
 	GLEW_1130)
 
 add_executable(thinGLViewerSample 
-	src/thinGLViewerSample.cpp src/shader.cpp
+	src/thinGLViewerSample.cpp src/ThinGlViewer.cpp src/shader.cpp
 )
 
 target_link_libraries(thinGLViewerSample
