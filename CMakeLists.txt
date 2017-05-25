@@ -21,10 +21,13 @@ include_directories(
 set(ALL_LIBS
 	${OPENGL_LIBRARY}
 	glfw
-	GLEW_1130)
+	GLEW_1130 libThinGlViewer )
+
+add_library(libThinGlViewer STATIC 
+   src/ThinGlViewer.cpp src/shader.cpp )
 
 add_executable(thinGLViewerSample 
-	src/thinGLViewerSample.cpp src/ThinGlViewer.cpp src/shader.cpp
+	src/thinGLViewerSample.cpp 
 )
 
 target_link_libraries(thinGLViewerSample
