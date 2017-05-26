@@ -8,8 +8,9 @@ int main( void )
 {
 
   ThinGlViewer thinViewer;
-  thinViewer.initWindow("demo", 1024, 768);
-  thinViewer.render();
+  if( thinViewer.initWindow("demo", 1024, 768)) {
+      thinViewer.render();
+  }
 	
 	return 0;
 }

@@ -15,6 +15,8 @@ class ThinGlViewer {
     public:
         void render();
         GLFWwindow* window;
-        void initWindow(const char* windowName, const int width, const int height);
+        bool initWindow(const char* windowName, const int width, const int height);
+    private:
+         bool isGl21 = false;
 };
 

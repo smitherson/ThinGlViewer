@@ -4,7 +4,7 @@ project (Tutorials)
 
 find_package(OpenGL REQUIRED)
 
-set(CMAKE_CXX_FLAGS " -g ${CMAKE_CXX_FLAGS}" )
+set(CMAKE_CXX_FLAGS " -g -std=c++11 ${CMAKE_CXX_FLAGS}" )
 
 add_subdirectory (external)
 include_directories(
@@ -19,9 +19,10 @@ include_directories(
 )
 
 set(ALL_LIBS
-	${OPENGL_LIBRARY}
-	glfw
-	GLEW_1130 libThinGlViewer )
+        libThinGlViewer
+        ${OPENGL_LIBRARY}
+        glfw
+        GLEW_1130  )
 
 add_library(libThinGlViewer STATIC 
    src/ThinGlViewer.cpp src/shader.cpp )
