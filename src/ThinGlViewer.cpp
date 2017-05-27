@@ -151,5 +151,4 @@ void ThinGlViewer::render() {
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
 
-
 }
