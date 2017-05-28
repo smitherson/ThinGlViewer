@@ -25,7 +25,7 @@ set(ALL_LIBS
         GLEW_1130  )
 
 add_library(libThinGlViewer STATIC 
-   src/ThinGlViewer.cpp src/shader.cpp )
+   src/ThinGlViewer.cpp src/shader.cpp src/controls.cpp )
 
 add_executable(thinGLViewerSample 
 	src/thinGLViewerSample.cpp 

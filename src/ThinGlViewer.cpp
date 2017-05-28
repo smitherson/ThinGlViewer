@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "shader.hpp"
+#include "controls.hpp"
 
 using namespace glm;
 
@@ -107,12 +108,17 @@ void ThinGlViewer::render() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
 	do{
-
 		// Clear the screen
 		glClear( GL_COLOR_BUFFER_BIT );
 
 		// Use our shader
 		glUseProgram(programID);
+
+        computeMatricesFromInputs(window);
+        glm::mat4 ProjectionMatrix = getProjectionMatrix();
+        glm::mat4 ViewMatrix = getViewMatrix();
+        glm::mat4 ModelMatrix = glm::mat4(1.0);
+        glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		// Send our transformation to the currently bound shader, 
 		// in the "MVP" uniform
