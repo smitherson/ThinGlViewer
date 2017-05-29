@@ -13,7 +13,7 @@
 
 class ThinGlViewer {
     public:
-        void render();
+        void testRender();
         GLFWwindow* window;
         bool initWindow(const char* windowName, const int width, const int height);
     private:

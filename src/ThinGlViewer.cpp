@@ -62,7 +62,7 @@ bool ThinGlViewer::initWindow(const char* windowName, const int width, const int
 }
 
 
-void ThinGlViewer::render() {
+void ThinGlViewer::testRender() {
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	GLuint VertexArrayID;

@@ -9,7 +9,7 @@ int main( void )
 
   ThinGlViewer thinViewer;
   if( thinViewer.initWindow("demo", 1024, 768)) {
-      thinViewer.render();
+      thinViewer.testRender();
   }
 	
 	return 0;
