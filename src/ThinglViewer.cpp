@@ -1,4 +1,4 @@
-#include "ThinGlViewer.h"
+#include "ThinglViewer.h"
 #include <stdio.h>
 
 #include "shader.hpp"
@@ -7,7 +7,7 @@
 using namespace glm;
 
 
-bool ThinGlViewer::initWindow(const char* windowName, const int width, const int height) {
+bool ThinglViewer::initWindow(const char* windowName, const int width, const int height) {
 	if( !glfwInit() )
 	{
 		fprintf( stderr, "Failed to initialize GLFW\n" );
@@ -62,7 +62,7 @@ bool ThinGlViewer::initWindow(const char* windowName, const int width, const int
 }
 
 
-void ThinGlViewer::testRender() {
+void ThinglViewer::testRender() {
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 	GLuint VertexArrayID;

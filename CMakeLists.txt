@@ -1,12 +1,13 @@
-# CMake entry point
 cmake_minimum_required (VERSION 3.0)
-project (Tutorials)
+project (ThinglViewer)
 
 find_package(OpenGL REQUIRED)
 
 set(CMAKE_CXX_FLAGS " -g -std=c++11 ${CMAKE_CXX_FLAGS}" )
 
 add_subdirectory (external)
+add_subdirectory (examples)
+
 include_directories(
 	external/AntTweakBar-1.16/include/
 	external/glfw-3.1.2/include/GLFW/
@@ -19,18 +20,13 @@ include_directories(
 )
 
 set(ALL_LIBS
-        libThinGlViewer
+        libThinglViewer
         ${OPENGL_LIBRARY}
         glfw
         GLEW_1130  )
 
-add_library(libThinGlViewer STATIC 
-   src/ThinGlViewer.cpp src/shader.cpp src/controls.cpp )
-
-add_executable(thinGLViewerSample 
-	src/thinGLViewerSample.cpp 
-)
-
-target_link_libraries(thinGLViewerSample
-	${ALL_LIBS}
-)
+add_library(libThinglViewer STATIC 
+    src/ThinglViewer.cpp 
+    src/viewers/ThinglPointcloudViewer.cpp
+    src/shader.cpp 
+    src/controls.cpp )

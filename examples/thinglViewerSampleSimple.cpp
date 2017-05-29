@@ -1,13 +1,13 @@
 // Include standard headers
 #include <stdio.h>
-#include "ThinGlViewer.h"
+#include "ThinglViewer.h"
 using namespace glm;
 
 
 int main( void )
 {
 
-  ThinGlViewer thinViewer;
+  ThinglViewer thinViewer;
   if( thinViewer.initWindow("demo", 1024, 768)) {
       thinViewer.testRender();
   }
