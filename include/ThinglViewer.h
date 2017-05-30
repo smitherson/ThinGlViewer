@@ -16,7 +16,7 @@ class ThinglViewer {
         void testRender();
         GLFWwindow* window;
         bool initWindow(const char* windowName, const int width, const int height);
-    private:
+    protected:
          bool isGl21 = false;
 };
 
