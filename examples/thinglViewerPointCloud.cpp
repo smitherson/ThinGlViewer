@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "ThinglPointcloudViewer.h"
 #include <opencv2/imgproc.hpp>
-#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 int main( void )
