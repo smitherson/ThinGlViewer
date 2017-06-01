@@ -3,7 +3,6 @@
 #include <opencv2/opencv.hpp>
 
 #include <shader.hpp>
-#include <controls.hpp>
 
 
 void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImage,
