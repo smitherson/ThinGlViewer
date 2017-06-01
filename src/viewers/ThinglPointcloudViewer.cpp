@@ -64,21 +64,28 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
   GLuint MatrixID = glGetUniformLocation(programID, "MVP");
   glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
+
+  ProjectionMatrix = glm::perspective(glm::radians(initialFoV), 4.0f / 3.0f, 0.1f, 100.0f);
+  ViewMatrix       = glm::lookAt(    
+      position , // Camera is at (4,3,-3), in World Space
+      glm::vec3(0,0,100), // and looks at the origin
+      glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+      );  
+  glm::mat4 Model      = glm::mat4(1.0f);
+  glm::mat4 MVP        = ProjectionMatrix * ViewMatrix * Model; // Remember, matrix multiplication is the other way around
+
   do {
 
     glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(programID);
 
     //we get the matrix of the camera here
-    computeMatricesFromInputs(window);
-    glm::mat4 ProjectionMatrix = getProjectionMatrix();
-    glm::mat4 ViewMatrix = getViewMatrix();
+    computeMatricesFromInputs();
     glm::mat4 ModelMatrix = glm::mat4(1.0);
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+    MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
     glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
-    //now we add the buffers
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId);
     glVertexAttribPointer(
@@ -116,7 +123,6 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
   glDeleteVertexArrays(1, &VertexArrayID);
   delete cloudVertices;
   delete cloudColors;
-  // Close OpenGL window and terminate GLFW
   glfwTerminate();
 }
 

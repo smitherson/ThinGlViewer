@@ -15,10 +15,8 @@ include_directories(
 	external/glew-1.13.0/include/
 	external/assimp-3.0.1270/include/
 	external/bullet-2.81-rev2613/src/
-	.
   ./include/
   ./src/
-
 )
 
 set(ALL_LIBS
@@ -30,5 +28,4 @@ set(ALL_LIBS
 add_library(libThinglViewer STATIC 
     src/ThinglViewer.cpp 
     src/viewers/ThinglPointcloudViewer.cpp
-    src/shader.cpp 
-    src/controls.cpp )
+    src/shader.cpp )
