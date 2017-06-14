@@ -232,8 +232,8 @@ void ThinglViewer::computeMatricesFromInputs(){
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	ProjectionMatrix = glm::perspective(glm::radians(FoV), 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
-    printf ("direction %f %f %f\n", direction[0],direction[1],direction[2]);
-    printf ("position %f %f %f\n", position[0], position[1], position[2]);
+    //printf ("direction %f %f %f\n", direction[0],direction[1],direction[2]);
+    //printf ("position %f %f %f\n", position[0], position[1], position[2]);
 
 	ViewMatrix       = glm::lookAt(
 								position,           // Camera is here

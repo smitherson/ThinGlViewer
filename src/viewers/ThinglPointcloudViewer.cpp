@@ -5,9 +5,20 @@
 #include <shader.hpp>
 
 
+
+
 void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImage,
         const cv::Mat_<unsigned short>& depthImage,
         const cv::Mat& K) {
+    
+
+    size_t found;
+    std::string str(__FILE__);
+    found=str.find_last_of("/\\");
+    const char* dir = str.substr(0,found).c_str();
+
+
+    printf("%s\n", dir);
 
     float fxi,fyi,cxi,cyi;
     cv::Mat_<float> Kinv = K.inv();
