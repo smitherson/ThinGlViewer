@@ -4,9 +4,6 @@
 
 #include <shader.hpp>
 
-
-
-
 void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImage,
         const cv::Mat_<unsigned short>& depthImage,
         const cv::Mat& K) {
