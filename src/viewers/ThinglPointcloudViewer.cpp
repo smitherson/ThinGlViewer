@@ -15,10 +15,9 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
     size_t found;
     std::string str(__FILE__);
     found=str.find_last_of("/\\");
-    const char* dir = str.substr(0,found).c_str();
+    const std::string shaderDir = str.substr(0,found+1);
 
-
-    printf("%s\n", dir);
+    printf("%s\n", shaderDir.c_str());
 
     float fxi,fyi,cxi,cyi;
     cv::Mat_<float> Kinv = K.inv();
@@ -58,11 +57,13 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
     GLuint vertexColorID = 0;
 
     if (!isGl21) {
-        programID = LoadShaders( "../examples/TransformVertexShader330.vertexshader", "../examples/ColorFragmentShader330.fragmentshader" );
+        programID = LoadShaders( (shaderDir + "TransformVertexShader330.vertexshader").c_str(), 
+        (shaderDir + "ColorFragmentShader330.fragmentshader").c_str() );
         vertexPosition_modelspaceID = 0;
         vertexColorID = 1;
     } else {
-        programID = LoadShaders( "../examples/TransformVertexShader120.vertexshader", "../examples/ColorFragmentShader120.fragmentshader" );
+        programID = LoadShaders((shaderDir + "TransformVertexShader120.vertexshader").c_str(), 
+            (shaderDir + "ColorFragmentShader120.fragmentshader").c_str() );
         vertexPosition_modelspaceID = glGetAttribLocation(programID, "vertexPosition_modelspace");
         vertexColorID = glGetAttribLocation(programID, "vertexColor");
     }
@@ -126,8 +127,8 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
                 );
 
         glDrawArrays(GL_POINTS, 0, vertexBufferNumPoints);
-        glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(vertexPosition_modelspaceID);
+        glDisableVertexAttribArray(vertexColorID);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

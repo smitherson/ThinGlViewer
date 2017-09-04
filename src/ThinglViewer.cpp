@@ -7,6 +7,7 @@ using namespace glm;
 
 
 bool ThinglViewer::initWindow(const char* windowName, const int width, const int height) {
+
 	if( !glfwInit() )
 	{
 		fprintf( stderr, "Failed to initialize GLFW\n" );
@@ -22,6 +23,8 @@ bool ThinglViewer::initWindow(const char* windowName, const int width, const int
 
 	// Open a window and create its OpenGL context
 	window = glfwCreateWindow( width, height, windowName, NULL, NULL);
+
+  isGl21 = false;
 	if( window == NULL ){
 		fprintf( stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Trying to switch to 2.1.\n" );
         glfwTerminate();
@@ -40,6 +43,7 @@ bool ThinglViewer::initWindow(const char* windowName, const int width, const int
             return false;
         }
         isGl21 = true;
+        fprintf(stderr, "Succesfully switched to GL 2.1\n");
     }
 	glfwMakeContextCurrent(window);
 
@@ -162,11 +166,37 @@ void ThinglViewer::testRender() {
 void ThinglViewer::computeMatricesFromInputs(){
 
 	// glfwGetTime is called only once, the first time this function is called
-	static double lastTime = glfwGetTime();
 
 	// Compute time difference between current and last frame
 	double currentTime = glfwGetTime();
 	float deltaTime = float(currentTime - lastTime);
+  //glfwGetMouseButton( window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS ||
+  if ( glfwGetKey( window, GLFW_KEY_I ) == GLFW_RELEASE ) {
+    isIPressed = false;
+  }
+  if ( glfwGetKey( window, GLFW_KEY_I ) == GLFW_PRESS && isIPressed == false ) {
+    isIPressed = true;
+    if ( isInputActive ) {
+      isInputActive = false; 
+      glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    }
+    else { 
+      lastTime = glfwGetTime();
+      glfwSetCursorPos(window, 1024/2, 768/2);
+      isInputActive = true;
+      glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    }
+  }
+
+  int focused = glfwGetWindowAttrib(window, GLFW_FOCUSED);
+
+  if (!focused) {
+    isInputActive = false;
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+  } 
+
+  if (!isInputActive) return;
+
 
 	// Get mouse position
 	double xpos, ypos;
@@ -227,13 +257,24 @@ void ThinglViewer::computeMatricesFromInputs(){
 		position -= up * deltaTime * speed;
 	}
 
+  // Go to zero!
+	if (glfwGetKey( window, GLFW_KEY_O ) == GLFW_PRESS){
+		position = glm::vec3( 0, 0, 0 );
+    direction  = glm::vec3( 0, 0 , -10 ); 
+    up = glm::vec3( 0, 1, 0);
+    horizontalAngle = 3.14;
+    verticalAngle = 0;
+    lastTime = glfwGetTime();
+	}
+
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
 	ProjectionMatrix = glm::perspective(glm::radians(FoV), 4.0f / 3.0f, 0.1f, 100.0f);
 	// Camera matrix
-    //printf ("direction %f %f %f\n", direction[0],direction[1],direction[2]);
-    //printf ("position %f %f %f\n", position[0], position[1], position[2]);
+  /*printf ("------\n direction %f %f %f\n", direction[0],direction[1],direction[2]);
+  printf ("position %f %f %f\n", position[0], position[1], position[2]);
+  printf ("up %f %f %f\n", up[0], up[1], up[2]);*/
 
 	ViewMatrix       = glm::lookAt(
 								position,           // Camera is here

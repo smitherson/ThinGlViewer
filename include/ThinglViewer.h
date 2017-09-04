@@ -17,11 +17,13 @@ class ThinglViewer {
     bool initWindow(const char* windowName, const int width, const int height);
   protected:
     GLFWwindow* window;
-
+    bool isInputActive = false;
+    bool isIPressed = false;
     bool isGl21 = false;
     void computeMatricesFromInputs();
     glm::mat4 ViewMatrix;
     glm::mat4 ProjectionMatrix;
+    double lastTime = glfwGetTime();
 
     glm::vec3 position = glm::vec3( 0, 0, -1 ); 
     float horizontalAngle = 3.14f;
