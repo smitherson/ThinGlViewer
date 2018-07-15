@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 
 // Include GLFW
-#include <glfw3.h>
+#include <GLFW/glfw3.h>
 
 // Include GLM
 #include <glm/glm.hpp>
@@ -26,11 +26,15 @@ class ThinglViewer {
     double lastTime = glfwGetTime();
 
     glm::vec3 position = glm::vec3( 0, 0, -1 ); 
+    glm::vec3 up = glm::vec3( 0, 1, 0 ); 
+    
+    float rotationAngle = 3.14f/2;
+    float rotationSpeed = 0.8f;
     float horizontalAngle = 3.14f;
     float verticalAngle = 0.0f;
     float initialFoV = 45.0f;
 
-    float speed = 35.0f; // 3 units / second
+    float speed = 35.0f;
     float mouseSpeed = 0.005f;
 
 };

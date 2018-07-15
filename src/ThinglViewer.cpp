@@ -226,12 +226,24 @@ void ThinglViewer::computeMatricesFromInputs(){
 	);
 	
 	// Up vector
-	glm::vec3 up = glm::cross( right, direction );
+	//glm::vec3 up = glm::cross( right, direction );
+
+	// Rotate clockwise
+	if (glfwGetKey( window, GLFW_KEY_E ) == GLFW_PRESS) {
+    rotationAngle += deltaTime*rotationSpeed;
+    up = glm::vec3( cos(rotationAngle),sin(rotationAngle),0);
+	}
+	if (glfwGetKey( window, GLFW_KEY_Q ) == GLFW_PRESS) {
+    rotationAngle -= deltaTime*rotationSpeed;
+    up = glm::vec3( cos(rotationAngle),sin(rotationAngle),0);
+	}
+
+
 
 	// Move forward
 	if (glfwGetKey( window, GLFW_KEY_W ) == GLFW_PRESS || 
         glfwGetKey( window, GLFW_KEY_UP ) == GLFW_PRESS){
-		position -= direction * deltaTime * speed;
+		position -=  direction* deltaTime * speed;
 	}
 	// Move backward
 	if (glfwGetKey( window, GLFW_KEY_S ) == GLFW_PRESS || 

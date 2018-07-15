@@ -2,7 +2,7 @@
 
 // Input vertex data, different for all executions of this shader.
 attribute vec3 vertexPosition_modelspace;
-attribute vec3 vertexColor;
+attribute vec3 colorsPosition_modelspace;
 
 // Output data ; will be interpolated for each fragment.
 varying vec3 fragmentColor; 
@@ -16,6 +16,6 @@ void main(){
 
     // The color of each vertex will be interpolated
     // to produce the color of each fragment
-    fragmentColor = vertexColor;
+    fragmentColor = colorsPosition_modelspace;
 }
            
