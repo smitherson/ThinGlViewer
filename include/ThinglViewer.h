@@ -1,13 +1,10 @@
 #pragma once
 #include <stdlib.h>
 
-// Include GLEW
 #include <GL/glew.h>
 
-// Include GLFW
 #include <GLFW/glfw3.h>
 
-// Include GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
@@ -15,23 +12,27 @@
 class ThinglViewer {
   public:
     bool initWindow(const char* windowName, const int width, const int height);
+    void destroyWindow();    
+  protected:
     GLuint createShaderPipeline(const std::string & vertexShaderPath, const std::string & fragmentShaderPath, const std::string & geometryShaderPath);
   
-  protected:
-    int width;
-    int height;
-
-    GLFWwindow* window;
-    bool isInputActive = false;
-    bool isIPressed = false;
-    bool isGl21 = false; //my old laptop, which I still use, is OLD and I still use it - thus the support 
     void captureInputsAndComputeMatrices();
 
-    glm::mat4 ViewMatrix;
-    glm::mat4 ProjectionMatrix;
+    int width;
+    int height;
+    bool isGl21 = false; //my old laptop, which I still use, is OLD and I still use it - thus the support 
+  
+    GLFWwindow* window;
+    
+    //state variables for input managment
+    bool isInputActive = false;
+    bool isIPressed = false;
+    
+    glm::mat4 viewMatrix;
+    glm::mat4 projectionMatrix;
     double lastTime = glfwGetTime();
 
-    //inited camera position
+    //inited camera position, can be overriden by derived class 
     glm::vec3 position = glm::vec3( 0, 0, -1 ); 
     glm::vec3 up = glm::vec3( 0, 1, 0 ); 
     float rotationAngle = 3.14f/2;
@@ -45,6 +46,6 @@ class ThinglViewer {
 
   private:
     GLFWwindow* initGLFWAndCreateWindow(const char* windowName, const int width, const int height);
-
+    void manageIsInputActive();    
 };
 

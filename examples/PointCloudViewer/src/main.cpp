@@ -20,6 +20,7 @@ int main( void )
         thinViewer.showPointcloud(image,  depth, cv::Mat(K));
     }
 
+    thinViewer.destroyWindow();
     return 0;
 }
 

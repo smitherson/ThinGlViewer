@@ -63,12 +63,7 @@ bool ThinglViewer::initWindow(const char* windowName, const int width, const int
   return true;
 }
 
-void ThinglViewer::captureInputsAndComputeMatrices() {
-
-	// Compute time difference between current and last frame
-	double currentTime = glfwGetTime();
-	float deltaTime = float(currentTime - lastTime);
-  
+void ThinglViewer::manageIsInputActive() {
   if ( glfwGetKey( window, GLFW_KEY_I ) == GLFW_RELEASE ) {
     isIPressed = false;
   }
@@ -92,7 +87,15 @@ void ThinglViewer::captureInputsAndComputeMatrices() {
     isInputActive = false;
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   } 
+}
 
+void ThinglViewer::captureInputsAndComputeMatrices() {
+
+	// Compute time difference between current and last frame
+	double currentTime = glfwGetTime();
+	float deltaTime = float(currentTime - lastTime);
+
+  manageIsInputActive();  
   if (!isInputActive) return;
 
 	// Get mouse position
@@ -111,7 +114,6 @@ void ThinglViewer::captureInputsAndComputeMatrices() {
 		cos(verticalAngle) * cos(horizontalAngle)
 	);
 
-	
 	// Right vector
 	glm::vec3 right = glm::vec3(
 		sin(horizontalAngle - 3.14f/2.0f), 
@@ -119,9 +121,6 @@ void ThinglViewer::captureInputsAndComputeMatrices() {
 		cos(horizontalAngle - 3.14f/2.0f)
 	);
 	
-	// Up vector
-	//glm::vec3 up = glm::cross( right, direction );
-
 	// Rotate clockwise
 	if (glfwGetKey( window, GLFW_KEY_E ) == GLFW_PRESS) {
     rotationAngle += deltaTime*rotationSpeed;
@@ -131,8 +130,6 @@ void ThinglViewer::captureInputsAndComputeMatrices() {
     rotationAngle -= deltaTime*rotationSpeed;
     up = glm::vec3( cos(rotationAngle),sin(rotationAngle),0);
 	}
-
-
 
 	// Move forward
 	if (glfwGetKey( window, GLFW_KEY_W ) == GLFW_PRESS || 
@@ -176,13 +173,8 @@ void ThinglViewer::captureInputsAndComputeMatrices() {
 	float FoV = initialFoV;// - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting up a callback for this. It's a bit too complicated for this beginner's tutorial, so it's disabled instead.
 
 	// Projection matrix : 45° Field of View, 4:3 ratio, display range : 0.1 unit <-> 100 units
-	ProjectionMatrix = glm::perspective(glm::radians(FoV), 4.0f / 3.0f, 0.1f, 100.0f);
-	// Camera matrix
-  /*printf ("------\n direction %f %f %f\n", direction[0],direction[1],direction[2]);
-  printf ("position %f %f %f\n", position[0], position[1], position[2]);
-  printf ("up %f %f %f\n", up[0], up[1], up[2]);*/
-
-	ViewMatrix  = glm::lookAt(
+	projectionMatrix = glm::perspective(glm::radians(FoV), 4.0f / 3.0f, 0.1f, 100.0f);
+ 	viewMatrix  = glm::lookAt(
 								position,           // Camera is here
 								position-direction, // and looks here : at the same position, plus "direction"
 								up                  // Head is up (set to 0,-1,0 to look upside-down)
