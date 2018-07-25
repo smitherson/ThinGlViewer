@@ -2,11 +2,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/opencv.hpp>
 
-#include <shader.hpp>
-
-
-
-
 void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImage,
         const cv::Mat_<unsigned short>& depthImage,
         const cv::Mat& K) {
@@ -15,9 +10,9 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
     size_t found;
     std::string str(__FILE__);
     found=str.find_last_of("/\\");
-    const std::string shaderDir = str.substr(0,found+1);
+    const std::string shaderDir = str.substr(0,found+1)+"shaders/";
 
-    printf("%s\n", shaderDir.c_str());
+    printf("Shader files are in: %s\n", shaderDir.c_str());
 
     float fxi,fyi,cxi,cyi;
     cv::Mat_<float> Kinv = K.inv();
@@ -57,13 +52,13 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
     GLuint vertexColorID = 0;
 
     if (!isGl21) {
-        programID = LoadShaders( (shaderDir + "TransformVertexShader330.vertexshader").c_str(), 
-        (shaderDir + "ColorFragmentShader330.fragmentshader").c_str() );
+        programID = createShaderPipeline(shaderDir + "TransformVertexShader330.vertexshader", 
+                                         shaderDir + "ColorFragmentShader330.fragmentshader", "" );
         vertexPosition_modelspaceID = 0;
         vertexColorID = 1;
     } else {
-        programID = LoadShaders((shaderDir + "TransformVertexShader120.vertexshader").c_str(), 
-            (shaderDir + "ColorFragmentShader120.fragmentshader").c_str() );
+        programID = createShaderPipeline(shaderDir + "TransformVertexShader120.vertexshader", 
+                                         shaderDir + "ColorFragmentShader120.fragmentshader", "" );
         vertexPosition_modelspaceID = glGetAttribLocation(programID, "vertexPosition_modelspace");
         vertexColorID = glGetAttribLocation(programID, "vertexColor");
     }
@@ -98,7 +93,7 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
         glUseProgram(programID);
 
         //we get the matrix of the camera here
-        computeMatricesFromInputs();
+        captureInputsAndComputeMatrices();
         glm::mat4 ModelMatrix = glm::mat4(1.0);
         MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
@@ -143,4 +138,5 @@ void ThinglPointcloudViewer::showPointcloud(const cv::Mat_<cv::Vec3b>& colorImag
     delete cloudColors;
     glfwTerminate();
 }
+
 
