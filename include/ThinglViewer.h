@@ -9,13 +9,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <string>
 
+GLuint createShaderPipeline(const std::string & vertexShaderPath, const std::string & fragmentShaderPath, const std::string & geometryShaderPath);
+  
 class ThinglViewer {
   public:
     bool initWindow(const char* windowName, const int width, const int height);
     void destroyWindow();    
   protected:
-    GLuint createShaderPipeline(const std::string & vertexShaderPath, const std::string & fragmentShaderPath, const std::string & geometryShaderPath);
-  
     void captureInputsAndComputeMatrices();
 
     int width;

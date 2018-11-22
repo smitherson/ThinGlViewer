@@ -218,7 +218,7 @@ bool compileShaderCode(const GLuint shaderId, const std::string & shaderCode ) {
 	}
 }
 
-GLuint ThinglViewer::createShaderPipeline(const std::string & vertexShaderPath, const std::string & fragmentShaderPath, const std::string & geometryShaderPath) {
+GLuint createShaderPipeline(const std::string & vertexShaderPath, const std::string & fragmentShaderPath, const std::string & geometryShaderPath) {
 
 	GLuint vertexShaderId   = glCreateShader(GL_VERTEX_SHADER);
   std::string vertexShaderCode = readShaderCode(vertexShaderPath);
